@@ -4,18 +4,29 @@
 
 pragma solidity ^0.4.19; // solhint-disable-line compiler-fixed
 
-import "./ITokenRecipient.sol";
-import "../node_modules/eip820/contracts/EIP820Implementer.sol";
+import "./erc777_tokenHolder.sol";
+import "eip820/contracts/EIP820Implementer.sol";
+import "eip820/contracts/EIP820ImplementerInterface.sol";
 
 
-contract ExampleTokenRecipient is EIP820Implementer, EIP820ImplementerInterface, ITokenRecipient {
+contract ExampleTokenRecipient is EIP820Implementer, EIP820ImplementerInterface, erc777_tokenHolder {
     bool private preventTokenReceived;
 
     function ExampleTokenRecipient(bool _setInterface, bool _preventTokenReceived) public {
         if (_setInterface) {
-            setInterfaceImplementation("ITokenRecipient", this);
+            setInterfaceImplementation("erc777_tokenHolder", this);
         }
         preventTokenReceived = _preventTokenReceived;
+    }
+
+    function tokensToSend(
+        address operator,
+        address from,
+        address to,
+        uint amount,
+        bytes userData,
+        bytes operatorData) public {
+
     }
 
     function tokensReceived(
@@ -33,8 +44,7 @@ contract ExampleTokenRecipient is EIP820Implementer, EIP820ImplementerInterface,
         }
     }
 
-    // solhint-disable-next-line no-unused-vars
-    function canImplementInterfaceForAddress(address addr, bytes32 interfaceHash) public view returns(bool) {
+    function canImplementInterfaceForAddress(address addr, bytes32 interfaceHash) view public returns(bool) {
         return true;
     }
 
