@@ -20,13 +20,13 @@ contract ExampleTokenRecipient is EIP820Implementer, EIP820ImplementerInterface,
     }
 
     function tokensToSend(
-        address operator,
+        address operator,   // solhint-disable no-unused-vars
         address from,
         address to,
         uint amount,
         bytes userData,
         bytes operatorData) public {
-
+        return; // Accepts any thing
     }
 
     function tokensReceived(
@@ -44,7 +44,8 @@ contract ExampleTokenRecipient is EIP820Implementer, EIP820ImplementerInterface,
         }
     }
 
-    function canImplementInterfaceForAddress(address addr, bytes32 interfaceHash) view public returns(bool) {
+    // solhint-disable-next-line no-unused-vars
+    function canImplementInterfaceForAddress(address addr, bytes32 interfaceHash) public view returns(bool) {
         return true;
     }
 
